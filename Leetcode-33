@@ -1,0 +1,25 @@
+int search(int* a, int n, int k){
+    
+    int mid, left= 0, right = n-1 ;
+    
+    while(left <= right){        
+        mid = (left + right) / 2;
+        if( a[mid] == k)
+            return mid;
+     //Righ half is sorted
+        if( a[mid] <= a[right] ){ 
+            if( k > a[mid] && k <= a[right])
+                left = mid+1;
+            else
+                right = mid -1;
+            
+        }else{ 
+             // Left half is sorted             
+            if( a[left] <= k &&  k < a[mid] )
+                right = mid -1;
+            else
+                left = mid + 1;
+        }
+   }
+   return -1;
+}
