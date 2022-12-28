@@ -1,0 +1,42 @@
+double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size) {
+    int l, h, m1, m2, amaxleft, bmaxleft, aminright, bminright, temp, leftmax, minright;
+    
+    if(nums1Size > nums2Size){
+        return findMedianSortedArrays(nums2, nums2Size, nums1, nums1Size);
+    }
+    l = 0;
+    h = nums1Size;
+    //printf("m1=%d m2 =%d l = %d h = %d \n", m1, m2, l, h);      
+    while( l <=  h){
+        
+            m1 = (l+h)/2;
+            m2 = ((nums1Size + nums2Size + 1)/2 ) - m1;
+        //printf("nums1Size =%d nums2Size=%d m1=%d m2 =%d l = %d h = %d \n",nums1Size, nums2Size, m1, m2, l, h);
+            amaxleft = (m1 == 0) ? INT_MIN:nums1[m1-1];
+            aminright = (m1 == nums1Size) ? INT_MAX:nums1[m1];
+        
+            bmaxleft = (m2 == 0) ? INT_MIN:nums2[m2-1];
+            bminright = (m2 == nums2Size) ? INT_MAX:nums2[m2];
+        
+            if((amaxleft <=  bminright) && (bmaxleft <= aminright)){
+              
+                //Found the mid of the two array
+                //if the total number of element in both array is of even legth
+                if( (nums1Size + nums2Size) %2 == 0 ){
+                    leftmax = (amaxleft > bmaxleft) ? amaxleft : bmaxleft;
+                    minright = ( aminright < bminright ) ? aminright : bminright;
+                    //printf("leftmax= %d  minright =%d \n", leftmax, minright);
+                    return ((double)(leftmax + minright )/2);
+                }else{
+                    return( (amaxleft > bmaxleft) ? amaxleft :bmaxleft );
+                }
+            }else if(amaxleft > bminright){
+                    h = m1 -1;
+            }else{
+                l = m1 +1;
+            }
+                
+    }
+    
+    return -1;
+}
