@@ -1,0 +1,18 @@
+int* singleNumber(int* a, int n, int* returnSize){
+    
+    unsigned int d= 0, i;
+    *returnSize = 2;
+    int *ret = (int *)calloc(2, sizeof(int));
+    for(i = 0; i<n; i++){
+      d = d ^ a[i];
+    }    
+    //calculate mask of the with LSB bit which is set in XOR of the array
+    d = d & -d;    
+    for(i = 0; i<n; i++){
+        if(d&a[i])
+            ret[0] = ret[0] ^ a[i];
+        else
+            ret[1] = ret[1] ^ a[i];
+    }    
+    return ret;
+}
