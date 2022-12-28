@@ -1,0 +1,28 @@
+int findMaximumXOR(int* a, int n){
+
+    long long i, j, k, set[n], mask, count = 0, ncount = 0, max = 0, temp;
+    
+    for(i = 29; i >= 0; i++){
+        mask = 1<<i;
+        count = 0;
+        ncount = 0;
+        k = 0;
+        bzero(set, sizeof(set));
+        for(j = 0; j<n; j++){
+
+            if( a[j] && mask){
+                count++;
+                set[k++] = a[j];
+            }
+        }
+        if(count != 0 && (count != n-1) )
+            break;
+    }
+  for(j = 0; j<count; j++){
+      for(k = 0; k<n; k++){
+         temp = set[j] ^ a[k];
+         max = temp>max?temp:max;
+      }
+  }
+    return max;
+}
