@@ -1,0 +1,16 @@
+Void func(int *main_local ){
+
+Int  func_local;
+
+if( main_local < &func_local )
+	printf(“Stack growing upward\n”);
+else
+	printf(“Stack growing downward \n”);
+
+}
+Int main(){
+
+Int  main_local;
+fun(&main_local);
+
+}
