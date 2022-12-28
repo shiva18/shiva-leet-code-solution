@@ -1,0 +1,26 @@
+int binary_search(int *a, int n, int k ){
+    int index = -1, rindex= -1;
+    int mid, l, h;
+    l = 0;
+    h = n-1;
+   
+    while(l <= h){
+        mid = l + (h-l)/2;
+        if( a[mid] == k){
+            return mid;
+            //break;
+            
+        }else if (k < a[mid])
+             h = mid -1;
+         else
+             l = mid + 1;
+    }            
+    return l;    
+}
+
+int searchInsert(int* a, int n, int target){
+    
+    if(a == 0)
+        return 0;    
+    return binary_search(a,n,target);
+}
