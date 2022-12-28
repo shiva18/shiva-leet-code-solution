@@ -1,0 +1,19 @@
+int findKthPositive(int* a, int n, int k){
+    
+    int i = 0, l , h = n-1, count = 0, mid;    
+       
+    while(l<=h){        
+        mid = l + (h -l)/2;        
+        count = a[mid] - (mid+1);
+        if( count >= k )
+            h = mid - 1;
+        else
+            l = mid + 1;          
+       
+    }    
+  
+    if(h == -1)
+        return k;       
+      //sleep(1);
+    return (a[h] + k - (a[h] - (h+1) ) ) ;
+} 
