@@ -1,0 +1,16 @@
+bool searchMatrix(int** a, int m, int* matrixColSize, int target){
+    
+    int r = 0, c = *matrixColSize -1;
+    
+    while(r < m && c >= 0){
+         if( a[r][c] == target)
+            return 1;
+        if(target > a[r][c])
+            r++;
+        else
+            c--;        
+    }
+    
+    return 0;
+
+}
