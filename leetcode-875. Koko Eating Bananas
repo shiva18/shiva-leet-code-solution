@@ -1,0 +1,29 @@
+int ispossible(int *a, int n, int h, int k){
+    int time = 0, i;
+    
+    for(i = 0; i<n; i++){
+        time += ( (a[i] -1)/ k) + 1;
+        if(time >h)
+            break;
+    }
+   
+    return (time<=h);
+    
+}
+
+int minEatingSpeed(int* a, int n, int h){
+    
+    int low= 1, high = 1000000000, ret = 0, i, time, mid;
+    
+    while(low < high){
+        mid = low + (high -low)/2;
+        
+        if(ispossible(a,n,h,mid))
+            high = mid;
+        else
+            low = mid+ 1;
+    }
+    
+    return low;
+    
+}
