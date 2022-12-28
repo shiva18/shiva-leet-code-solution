@@ -1,0 +1,59 @@
+https://leetcode.com/problems/maximum-length-of-subarray-with-positive-product/
+
+Given an array of integers nums, find the maximum length of a subarray where the product of all its elements is positive.
+A subarray of an array is a consecutive sequence of zero or more values taken out of that array.
+Return the maximum length of a subarray with positive product.
+ 
+Example 1:
+Input: nums = [1,-2,-3,4]
+Output: 4
+Explanation: The array nums already has a positive product of 24.
+Example 2:
+Input: nums = [0,1,-2,-3,-4]
+Output: 3
+Explanation: The longest subarray with positive product is [1,-2,-3] which has a product of 6.
+Notice that we cannot include 0 in the subarray since that'll make the product 0 which is not positive.
+Approach:
+1. Any  Zero element will freeze the subarray sequence of the positive product.
+2. Any subarray  with even number of the  negative number will result into positive product.
+3. Negative number index will mark the starting of the new subarray sequence of positive product if number of negative number is odd. 
+
+int getMaxLen(int* a, int n){
+    
+    int c_porduct = 0, max_product = INT_MIN, i, c_length = 0, max_length = 0, neg = 0, neg_index = 0;
+    if(n == 1 ){
+        if(a[0] > 0)
+            return 1;
+        else
+            return 0;        
+    }
+    
+    for(i = 0; i<n; i++){ 
+        
+        if(a[i] == 0){
+            c_length = 0;
+            neg = 0;
+        }else{
+            c_length++;
+            
+        }
+        
+        if(a[i] < 0){
+            if(neg == 0)
+                neg_index = c_length;  —>Any negative number will mark the starting point of the new subarray if  number of negative number is odd.
+											But if number of negative number is even then previous subarray will continue.
+           neg++;            
+        }
+
+        if(neg%2 != 0){
+            max_length = max_length>c_length - neg_index  ? max_length:c_length - neg_index;           
+            
+        }else{
+            max_length = max_length>c_length? max_length:c_length;
+        }
+       
+
+           
+    }
+    return max_length;
+}
