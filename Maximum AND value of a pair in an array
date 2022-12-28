@@ -1,0 +1,23 @@
+int checkbits(int mask, int *a, int n){
+    int count = 0, i;
+    for(i = 0; i<n; i++){
+        if( (pattren & a[i]) == mask)
+            count++;
+    }
+    return count;
+}
+int maxAND(int *a, int n){
+    int res = 0, count = 0, i= 0;
+    for(i = 31; i >=0; i--){
+	  mask = res | (1<< i ) 
+        count = checkbits( mask, a, n);
+        if(count >= 2)
+            res = res | 1<<i;
+    }
+    return res;
+}
+
+int main() {
+	int arr[] = {4, 8, 6, 2};
+	 printf("maxAND= %d\n", maxAND(arr,4));
+}
