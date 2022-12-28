@@ -1,0 +1,13 @@
+int findMaxConsecutiveOnes(int* a, int n){
+    
+    unsigned int count= 0, cur_count= 0, i;
+    for(i = 0; i< n; i++){
+        if( a[i] == 1)
+            cur_count++ ;
+           else
+            cur_count = 0;
+        if(cur_count > count)
+            count = cur_count;
+    }
+    return count;
+}
