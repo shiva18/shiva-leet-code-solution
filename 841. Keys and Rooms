@@ -1,0 +1,53 @@
+There are n rooms labeled from 0 to n - 1 and all the rooms are locked except for room 0. Your goal is to visit all the rooms. However, you cannot enter a locked room without having its key.
+When you visit a room, you may find a set of distinct keys in it. Each key has a number on it, denoting which room it unlocks, and you can take all of them with you to unlock the other rooms.
+Given an array rooms where rooms[i] is the set of keys that you can obtain if you visited room i, return true if you can visit all the rooms, or false otherwise.
+ 
+Example 1:
+Input: rooms = [[1],[2],[3],[]]
+Output: true
+Explanation: 
+We visit room 0 and pick up key 1.
+We then visit room 1 and pick up key 2.
+We then visit room 2 and pick up key 3.
+We then visit room 3.
+Since we were able to visit every room, we return true.
+Approach: 1. Maintained int boolean array.
+2. Start from both room, since zero room is open and make recursive call to visit each room which key is found and make corresponding  array element to TRUE.
+3. Check if any room is not visited.
+4.  we starting from room zero, which is open.
+5.  if room is not visited then collect the key from the room and mark the room(which key has be found )
+6.  visited, to avoid continuous recursion. It is possible current room is alead visited. 
+7.  So do not visit current room.
+
+
+ int hp[1000];
+void visit_room(int** a, int n, int* roomsColSize, int room ){
+
+    int i = 0;
+    for(i = 0; i <roomsColSize[room] ; i++){
+        //Get the room number which key is available in this room and mark that(next room) room visited (Since we have key for that room)
+        //Then visit the room which key is available in the next room.
+        int temp = a[room][i];
+        if( hp[temp] == 0 ){
+            hp[temp] = 1;
+            visit_room(a,n,roomsColSize, temp);
+        }
+    }
+
+    return;
+}
+
+bool canVisitAllRooms(int** a, int n, int* roomsColSize){
+
+    int i, room = 0;
+    if(a == NULL || n == 1 )
+        return 1;
+    bzero(hp, sizeof(hp));
+    visit_room(a, n, roomsColSize, room);
+    for(i = 1; i<n; i++){
+        if(hp[i] == 0)
+            return 0;
+    }
+  
+    return 1;
+}
