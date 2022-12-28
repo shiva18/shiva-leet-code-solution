@@ -1,0 +1,14 @@
+int findComplement(int n){
+    
+    int res = 0, i = 0;
+    while(n){
+        
+        if( ! (n&1) )
+            res = res + pow(2, i);           OR res = res | 1<< i
+        
+        n = n >>1;  
+        i++;
+      
+    }
+    return res;
+}
