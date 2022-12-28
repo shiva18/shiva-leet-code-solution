@@ -1,0 +1,47 @@
+https://leetcode.com/problems/duplicate-zeros/
+Given a fixed-length integer array arr, duplicate each occurrence of zero, shifting the remaining elements to the right.
+Note that elements beyond the length of the original array are not written. Do the above modifications to the input array in place and do not return anything.
+ 
+Example 1:
+Input: arr = [1,0,2,3,0,4,5,0]
+Output: [1,0,0,2,3,0,0,4]
+Explanation: After calling your function, the input array is modified to: [1,0,0,2,3,0,0,4]
+
+1. O(n) Solutionwith constant space
+Find the ith location which will fill the entire array.
+Start copying from the last.
+
+void duplicateZeros(int* a, int n){
+    
+   int i, j=0, c = 0, last = 0;   
+   for( i = 0; i<n ; i++){
+       c++;   
+       //To indicate the last number will be ‘0’   
+       if(c >= n ){
+           if(a[i] == 0)
+               last = 1;
+           break;
+       }           
+       if( a[i] == 0 ){
+           c++;
+           if(c >= n)
+           break;
+       }      
+   }
+   
+   if(i >= n-1)
+       return;
+   j = n -1;
+   while(i>= 0 && j >= 0){         
+       a[j--] = a[i]; 
+       if(a[i] == 0 && last == 1)
+           last = 0;
+       else if(a[i] == 0 && j>=0 ){
+           a[j--] = 0;
+           if(j<0)
+            break;
+       }
+       i--;
+  }  
+    
+}
