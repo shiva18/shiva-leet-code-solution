@@ -1,0 +1,41 @@
+You are given an integer array nums and an integer x. In one operation, you can either remove the leftmost or the rightmost element from the array nums and subtract its value from x. Note that this modifies the array for future operations.
+Return the minimum number of operations to reduce x to exactly 0 if it is possible, otherwise, return -1.
+ 
+Example 1:
+Input: nums = [1,1,4,2,3], x = 5
+Output: 2
+Explanation: The optimal solution is to remove the last two elements to reduce x to zero.
+Approach:
+1. Calculate total sum of the array .
+2. If total sum is equal to target sum than return the length of the array.
+3. If total sum is  less than target then return -1 since no addition operation will result into target.
+4. IMP: Find the continuous subarray length which sum is equal to : total_sum - target_sum
+
+ int minOperations(int* a, int n, int x){
+    
+    int target = 0, i, sum = 0, left = 0, wSize = -1, cwSize = -1;
+    for(i = 0; i< n ; i++){
+        target += a[i];
+    }
+    if(target == x)
+        return n;
+    
+    if(target < x)
+        return -1;
+    
+    target = target -x;
+    
+    for(i = 0; i<n; i++){        
+        sum += a[i];
+            
+        while(sum > target)
+            sum = sum - a[left++];  // Move the left of the window
+           cwSize = i -left + 1;
+        if( sum == target){
+            wSize =  (wSize > cwSize )? wSize: cwSize;  
+          
+        }
+      }
+      return (wSize != -1 ? (n - wSize) : -1 );
+    
+}
