@@ -1,0 +1,26 @@
+bool removeOnes(int** a, int r, int* gridColSize){
+    if(a == NULL)
+        return 1;
+    int c = *gridColSize, i, j, row_sum;
+    
+    if( (r == 1 && c == 1) || r == 0)
+        return 1;
+    
+    //Flip the coulumn which first element is 1;
+    for(i = 0; i<c; i++){
+        if( a[0][i] == 1 ){
+            for(j = 0; j< r; j++)
+                a[j][i] ^= 1;
+        }
+    }
+    
+    for(i = 1; i<r; i++){
+        row_sum = 0;
+        for(j = 0; j<c; j++)
+            row_sum += a[i][j];
+        if(row_sum != 0 && row_sum != c)
+            return 0;
+    }
+    
+    return 1;
+}
