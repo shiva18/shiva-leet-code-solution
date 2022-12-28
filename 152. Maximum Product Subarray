@@ -1,0 +1,46 @@
+https://leetcode.com/problems/maximum-product-subarray/
+Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest product, and return the product.
+The test cases are generated so that the answer will fit in a 32-bit integer.
+A subarray is a contiguous subsequence of the array.
+ 
+Example 1:
+Input: nums = [2,3,-2,4]
+Output: 6
+Explanation: [2,3] has the largest product 6.
+
+int ffmax(int a, int b, int c){    
+    int max = a*c;
+    int min = b*c;    
+    max = max>min?max:min; 
+    return max>c?max:c;
+    
+}
+int ffmin(int a, int b, int c){
+    
+    int max = a*c;
+    int min = b*c;    
+    min = max>min?min:max;   
+    return min<c?min:c;
+}
+
+int maxProduct(int* a, int n){    
+    
+    int max, min, c_max, c_min, i,res = INT_MIN;   
+    if( a == NULL || n == 1 )
+        return a[0];
+    
+    res = c_max = c_min = a[0];
+    
+    for(i = 1; i< n; i++){        
+        max = c_max;
+        min = c_min;        
+        c_max =  ffmax(max, min, a[i]);
+        c_min =  ffmin(max, min, a[i]);   
+        if(res< c_max)
+            res= c_max;
+        
+    }
+    
+    return res;
+    
+}
