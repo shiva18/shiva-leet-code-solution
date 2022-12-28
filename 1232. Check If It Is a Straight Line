@@ -1,0 +1,42 @@
+https://leetcode.com/problems/check-if-it-is-a-straight-line/
+You are given an array coordinates, coordinates[i] = [x, y], where [x, y] represents the coordinate of a point. Check if these points make a straight line in the XY plane.
+ 
+ 
+Example 1:
+￼
+Input: coordinates = [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7]]
+Output: true
+Approach : For line to straight , the slope of the two points will be always same between  any two co-ordinate.
+Slope = Y-cordinate diff  / X-Cordinate diff
+		= y2-y1/x2- y1;
+If x coordinate diff is the zero then returned big number—> Vertical line.
+
+
+ float get_slope( int *a, int *b){
+    
+    if(a[0] == b[0] )
+        return 400000;
+    
+    return (float)( (float)(b[1] - a[1]) / (float)(b[0] -a[0])  );
+    
+}
+
+
+bool checkStraightLine(int** a, int coordinatesSize, int* coordinatesColSize){
+    
+    int row = coordinatesSize;
+    int col = *coordinatesColSize;
+    int i, j,  c_xdiff, c_ydiff;    
+    float slope = 0, m = 0;
+    
+    slope = get_slope(a[0], a[1] );
+   
+    for(i = 2; i<coordinatesSize; i++){
+        m = get_slope(a[0], a[i]);
+        if(slope !=  m )
+            return 0;       
+    }
+    
+    return 1;    
+
+}
