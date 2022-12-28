@@ -1,0 +1,26 @@
+int maxDistToClosest(int* s, int n){
+    
+    int maxd= 0, cmaxd = 0, i, start = -1, end= -1, ret = 0;
+       
+    for(i = 0; i<n; i++){
+        
+            if(s[i] == 1){
+                cmaxd = 0;    
+                /*Initialize the first occupied of fill seat*/
+                if( start == -1)
+                    start = i;   
+                /*Keep updating the last occupied of the fill seat*/
+                end = i;   
+            } else{
+            cmaxd++;
+            if( cmaxd > maxd )
+                maxd = cmaxd;
+            }
+        
+    }
+        
+        ret = (maxd+1)/2 > start? (maxd+1)/2 : start;
+        ret = ret > (n - end -1) ? ret: (n - end-1);
+        return ret;       
+    
+}
