@@ -1,0 +1,44 @@
+int singleNonDuplicate(int* a, int n){
+    
+    
+    int i,l, h, mid;
+    
+    if(n%2 == 0)
+        return -1;
+    l = 0;
+    h = n-1;
+    if(n == 1)
+        return a[0];
+    
+    if(a[l] != a[l+1])
+        return a[0];
+    
+    if(a[h] != a[h-1])
+        return a[h];
+    
+    while(l<=h){
+        
+        mid = (l+h)/2;
+        if( a[mid] > a[mid-1] && a[mid] < a[mid+1] )
+            return a[mid];
+        
+        else if(mid%2 != 0){
+            if( a[mid] == a[mid+1] )
+                h = mid-1;
+            else  
+                l = mid+1;
+            
+        }else{
+            
+             if( a[mid] == a[mid+1] )
+                l = mid+1;
+             else  
+                h = mid-1;
+            
+            
+        }
+    }
+        
+        return -1;
+  
+}
