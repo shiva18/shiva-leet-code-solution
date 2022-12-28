@@ -1,0 +1,30 @@
+bool searchMatrix(int** a, int row, int* col, int target){
+    
+    int i= 0 , j= 0, l , h, mid ;
+    
+    if( target < a[0][0]  && target > a[row-1][*col-1] )
+        return 0;
+    
+    for(i = 0; i<row; i++){
+        
+        if(( target <= a[i][*col-1])){
+            l = 0;
+            h = *col -1;
+            while(l<= h){
+                mid = (l+h)/2;
+                if(a[i][mid] == target)
+                    return 1;
+                if(target > a[i][mid])
+                    l = mid+1;
+                else 
+                    h = mid -1;
+                
+            }
+                        
+        }
+        
+    }
+    
+    return 0;
+
+}
