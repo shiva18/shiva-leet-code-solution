@@ -1,0 +1,33 @@
+int findMin(int* a, int n){
+    
+    
+    int next, prev, l, h, mid;
+    if(a == NULL)
+        return INT_MIN;
+    
+    if(n <= 1 && a != NULL)
+        return a[0];
+    
+    l = 0;
+    h = n-1;
+    
+    while(l <= h){
+         
+             mid = (l + h)/2;
+            if(mid == 0 )
+                return (a[0]<a[1]? a[0]:a[1]);
+            if(mid == n-1)
+                 return (a[n-1]< a[n-2]? a[n-1]:a[n-2]);
+        
+            if( a[mid] < a[mid -1] && a[mid] < a[mid+1] )
+                return a[mid];
+        
+            if( a[mid] > a[h]   )
+                l = mid+1 ;
+            else 
+                h = mid;
+     }
+    
+   return -1;
+
+}
