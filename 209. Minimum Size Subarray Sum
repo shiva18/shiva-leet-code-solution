@@ -1,0 +1,40 @@
+https://leetcode.com/problems/minimum-size-subarray-sum/
+
+Given an array of positive integers nums and a positive integer target, return the minimal length of a contiguous subarray [numsl, numsl+1, ..., numsr-1, numsr] of which the sum is greater than or equal to target. If there is no such subarray, return 0 instead.
+ 
+Example 1:
+Input: target = 7, nums = [2,3,1,2,4,3]
+Output: 2
+Explanation: The subarray [4,3] has the minimal length under the problem constraint.
+Approach:
+1. Use two pointer approach 
+
+int minSubArrayLen(int target, int* a, int n){
+    int sum = 0 , len= INT_MAX , c_len = 0, left= 0,  right = 0;
+  
+//run the lo0p till left is less then right up to n, Loop also need to run for sum >= target to find smallest length in right    
+/* 7
+[2,3,1,2,4,3] */ 
+while(  (right<n && left<= right) || sum >= target){ 
+    
+    if(sum >= target){  
+         c_len = right - left  +1;
+        if(len > c_len )
+            len = c_len;        
+        sum -= a[left++];  
+               
+    }else{
+         sum += a[right];   
+       
+    }  
+    // Move the right pointer only if sum is les than the target
+    if(sum < target)        
+        right++;
+   
+}
+
+if(len == INT_MAX )
+    return 0;
+else 
+    return len;
+}
