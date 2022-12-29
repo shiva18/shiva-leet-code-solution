@@ -1,0 +1,69 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode* reverser_helper(struct ListNode* head){
+
+     if(head == NULL || head->next == NULL)
+            return head;
+     struct ListNode *cur, *next, *result = NULL;
+     cur = head;
+     while(cur != NULL){
+         next = cur->next;
+         cur->next = result;
+         result = cur;
+         cur = next;
+     }
+
+    return result;
+ } 
+
+void reverse(struct ListNode* head, int count){
+    
+     if( head == NULL || head->next == NULL )
+        return ;
+    struct ListNode *cur, *end, *p, *start, *nextg = NULL;
+    int ncount, n;
+    n = count;
+    ncount = 0;
+    //point to the starting of the node which need to be reversed.
+    start =  p = head->next;
+    end = head;
+    n = count;
+    while(end->next != NULL && n > 0){
+        end = end->next;
+        ncount++;
+        n--;
+        printf("s=%d\t", end->val);
+    }
+    printf("\n");
+    if(ncount%2 != 0)
+        reverse(end, count+1);
+    else{
+        nextg = end->next;
+        end->next = NULL;
+        head->next = reverser_helper(start);
+        p->next = nextg;
+        printf("%d\t", p->val);
+        reverse(p, count+1 );
+    }
+     printf("\n");
+    return;
+}
+
+
+struct ListNode* reverseEvenLengthGroups(struct ListNode* head){
+    
+    
+    if( head == NULL || head->next == NULL )
+        return head;
+    
+    struct ListNode* cur= head;
+    reverse(head,2);
+          
+    return head;
+
+}
