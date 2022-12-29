@@ -1,0 +1,39 @@
+Given a non-negative integer represented as a linked list of digits, plus one to the integer.
+The digits are stored such that the most significant digit is at the head of the list.
+ 
+Example 1:
+Input: head = [1,2,3]
+Output: [1,2,4]
+
+Approach:
+Algorithm
+* Initialize sentinel node as ListNode(0) and set it to be the new head: sentinel.next = head.
+* Find the rightmost digit not equal to nine.
+* Increase that digit by one.
+* Set all the following nines to zero.
+* Return sentinel node if it was set to 1, and head sentinel.next otherwise.
+
+struct ListNode* plusOne(struct ListNode* head){
+
+struct ListNode *notNine, *sentiNel;
+
+sentiNel = (struct ListNode*)calloc(1, sizeof(struct ListNode) );
+sentiNel->val = 0;
+sentiNel->next = head;
+head = sentiNel;
+while( head != NULL ){
+    if(head->val != 9 )
+        notNine = head;
+    head = head->next;
+}
+notNine->val++;
+notNine = notNine->next;
+while(notNine != NULL)
+{
+    notNine->val = 0;
+    notNine = notNine->next;
+}
+return(sentiNel->val != 0 ? sentiNel:sentiNel->next);
+
+
+}
