@@ -1,0 +1,43 @@
+You are given the head of a linked list, and an integer k.
+Return the head of the linked list after swapping the values of the kth node from the beginning and the kth node from the end (the list is 1-indexed).
+ 
+Example 1:
+￼
+Input: head = [1,2,3,4,5], k = 2
+Output: [1,4,3,2,5]
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+
+ [7,9,6,6,7,8,3,0,9,5]
+  s.   f
+ */
+struct ListNode* swapNodes(struct ListNode* head, int k){
+
+    if( head == NULL || k == 0 )
+        return head;
+    struct ListNode  *f, *p, *s;
+    p = f = s = head;
+    if( k == 1 )
+        p = head;
+    else{
+        while(k >1){
+            f = f->next;
+            k--;
+        }
+    }
+    p = f;
+    while(f->next != NULL ){
+        s = s->next;
+        f = f->next;
+    }
+    int temp = s->val;
+    s->val = p->val;
+    p->val = temp;
+    return head;
+
+}
