@@ -1,0 +1,77 @@
+You are given two non-empty linked lists representing two non-negative integers. The most significant digit comes first and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+Example 1:
+Input: l1 = [7,2,4,3], l2 = [5,6,4]
+Output: [7,8,0,7]
+
+struct ListNode* reverse(struct ListNode* cur){
+    
+    if(cur == NULL || cur->next == NULL)
+        return cur;
+    struct ListNode  *next, *result = NULL;  
+    while(cur != NULL){
+        next = cur->next;
+        cur->next = result;
+        result = cur;
+        cur = next;
+    }
+    
+    return result;
+}
+
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2){
+    
+    if(l1 == NULL && l2 == NULL)
+        return NULL;
+    if(l1 != NULL && l2 == NULL)
+        return l1;
+    if( l1 == NULL && l2 != NULL)
+        return l2;
+     
+    struct ListNode *head = NULL, *cur,  *next, *temp = NULL; 
+    int sum= 0, c = 0;
+       
+   l1 = reverse(l1);
+   l2 = reverse(l2);
+    
+    while(l1 || l2){
+        
+        sum = 0;
+        if(l1)
+            sum = l1->val;
+        if(l2)
+            sum += l2->val;
+        sum += c;
+        
+        c = sum/10;
+        sum = sum%10;
+        if(head == NULL ){
+            head = (struct ListNode*)calloc(1, sizeof(struct ListNode));
+            head->next = NULL;
+            cur = head;
+        }else{
+            cur->next = (struct ListNode*)calloc(1, sizeof(struct ListNode));
+            cur = cur->next;
+            cur->next = NULL;
+        }
+        cur->val = sum; 
+        if(l1)
+            l1 = l1->next;
+        if(l2)
+            l2 = l2->next;
+        //printf("%d\t", cur->val);
+        sum = 0;
+                
+    }
+    
+    if(c != 0){
+        cur->next = (struct ListNode*)calloc(1, sizeof(struct ListNode));
+        cur = cur->next;
+        cur->val = c;
+        cur->next = NULL;
+    }
+    
+    return reverse(head);
+}
