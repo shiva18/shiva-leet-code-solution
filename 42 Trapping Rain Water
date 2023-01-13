@@ -1,0 +1,43 @@
+Approach: 
+1. Water contained is decide by the lower height of the  tower.
+2. From left side :  For water to be contained : Height of the left tower must be more than its right tower.
+3. From right side :  For water to be contained : Height of the right tower must be more than its left tower.
+4.  Calculate the water contained in side which has lower height tower in each run.
+
+int trap(int* height, int heightSize){
+    
+    int max_right, max_left,left,right, sum;
+    max_right =  max_left = left = right = sum = 0;
+    right = heightSize -1;
+    left = 0;
+    
+    if(heightSize<=2)
+        return 0;    
+    
+   while(left < right){
+       //Water contained is decide by the lower height of the  tower.
+       if(height[left] < height[right]){
+          //no water will be contained if height of the current tower is more than max left, so update max left
+            if(height[left] > max_left){
+                max_left = height[left];
+                
+            }else{                
+                    
+                sum = sum + (max_left -height[left]);
+            
+            }
+           left++;
+     
+       }else{
+            if(height[right] > max_right){
+                max_right = height[right];
+            }else{
+                sum = sum + max_right -height[right];
+            }
+           right--;
+       }
+                 
+   }
+return sum;
+  
+}
