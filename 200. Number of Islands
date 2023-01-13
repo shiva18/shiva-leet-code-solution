@@ -1,0 +1,38 @@
+Approach: 
+1.  Increment the  island count by one if we find any ‘1’
+2. Mark all connected island (up, down , and right and left)to visited by updating it by ‘2’;
+
+
+void mark_island(char **a, int i, int j, int row, int col){
+    
+    printf("i = %d j= %d row=%d col =%d\n", i,j,row,col);
+    if( i<0 || i>= row || j<0 || j>= col || a[i][j] != '1')
+        return;
+    a[i][j] = '2';    
+    mark_island(a,i+1,j,row,col);   //DOWN 
+     mark_island(a,i,j+1,row,col); // Right
+     mark_island(a,i-1,j,row,col);  //TOP
+     mark_island(a,i,j-1,row,col);    //LEFT
+    return;
+}
+
+int numIslands(char** a, int n, int* gridColSize){    
+    
+    int row, col, i,j,num_of_island= 0;    
+    if(n == 0)
+        return 0;    
+    row = n;
+    col = *gridColSize;    
+    for(i = 0;i<row; i++){
+        
+        for(j = 0; j<col;j++){
+             if( a[i][j] == '1'){                 
+                 mark_island(a,i,j,row,col);
+                 num_of_island++;                 
+             }
+        }
+          
+    }
+    
+    return num_of_island;
+}
