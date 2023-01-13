@@ -1,0 +1,18 @@
+int countMaxOrSubsets(int* a, int n){
+
+    int i, j, max= 0, cor = 0, len = 1<<n, count = 0;
+    for(i = 0; i<n; i++){
+        max = max | a[i];
+    }
+    for(i = 0; i<len;i++){
+        cor = 0;
+        for(j = 0; j<n;j++){
+            if( (1<<j) & i )
+                cor |= a[j];
+        }
+        if( cor == max)
+            count++;
+    }
+    
+    return count;
+}
