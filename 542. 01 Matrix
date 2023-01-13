@@ -1,0 +1,65 @@
+int minv(int a, int b){
+    
+    return (a>b?b:a);
+}
+
+void find_distance(int m, int n){    
+      int i, j, row, col,  **ret;
+       row =   m;
+       col =  n;
+    ret = (int **)calloc(row, sizeof(int *));
+       
+    for(i = 0; i< row; i++){
+           ret[i] = (int*)calloc(col, sizeof(int));
+    }
+    printf("\n");
+   //Update the all the cell Distance to maximum
+    for(i = 0; i<row; i++){
+        
+        for(j = 0; j<col; j++){
+            if(a[i][j]){
+                ret[i][j] = INT_MAX;
+            }
+        }
+    }
+       
+    //check the left and up cell and update the distance
+    for(i = 0; i<row; i++){
+        printf("\n");
+           for(j = 0; j<col; j++){
+		   //if the cell  value is zero then distance is zero	               
+               if(a[i][j] == 0){
+                  ret[i][j] = 0;
+                          
+               }else{
+                  //Check the left cell 
+                  if(i>0)
+                       ret[i][j] = minv( ret[i][j], ret[i-1][j]+1 );
+                //Check the up cell 
+                   if(j > 0)
+                       ret[i][j] = minv( ret[i][j], ret[i][j-1]+1 );
+              }
+           }
+       }
+
+    //check the right and down cell and update the distance
+    for(i = row-1; i>=0 ; i--){
+           
+           for(j = col-1; j>=0 ; j--){
+                  //Check the right cell 
+                   if(i < row-1 )
+                       ret[i][j] = minv( ret[i][j], ret[i+1][j] + 1 );
+			//Check the Down cell 
+                   if(j > col-1 )
+                       ret[i][j] = minv( ret[i][j], ret[i][j+1] + 1 );
+           }
+    }
+    //Print final distance matrix
+    for(i = 0; i<row; i++){
+           printf("\n");
+        for(j = 0; j<col; j++){
+            printf("%d\t \t \t ", ret[i][j]);
+        }
+
+    }
+}
