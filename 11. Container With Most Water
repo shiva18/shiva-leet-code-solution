@@ -1,0 +1,40 @@
+
+Approach: 
+1. Find the maximum height of the tower from both left and right side.
+2. Find the water contained between these tower.
+
+int maxArea(int* height, int heightSize){
+    
+    int max_left, max_right, left, right, max_left_index, max_right_index, min, max, cur_max = 0;
+    
+    max_left = max_right = left = right = max_left_index = max_right_index = min = max = 0;
+    right =   heightSize -1;
+    int i = 0;
+    
+        
+    while(left < right){
+        if(height[left] > max_left ){
+            max_left = height[left];
+            max_left_index = left;
+         
+        }
+        if(height[right] > max_right ){
+            max_right = height[right];
+            max_right_index = right;
+           
+        }
+                               
+            min = (max_left < max_right) ? max_left : max_right;
+            cur_max = min * (max_right_index -max_left_index);
+            if( cur_max > max)
+                max = cur_max;
+        
+            if(height[left] <  height[right] )
+                left++;
+            else
+                right--;
+                            
+    }        
+     
+       return  max;
+}
