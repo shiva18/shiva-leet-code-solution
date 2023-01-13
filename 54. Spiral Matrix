@@ -1,0 +1,39 @@
+int* spiralOrder(int** a, int matrixSize, int* matrixColSize, int* returnSize){
+    
+    if(matrixSize == NULL)
+        return NULL;
+    int i, index = 0, dir = 0, top, bottom, left, right, *ret, size = matrixSize * (*matrixColSize);
+    
+    ret = (int *)malloc(size*sizeof(int));
+    top = left = 0;
+    bottom = matrixSize -1;
+    right = (* matrixColSize) - 1;
+    bzero(ret,size);
+    * returnSize = size;
+    
+    while(index < size){
+        if(dir == 0){
+            for(i = left;i<=right; i++)
+                 ret[index++] = a[top][i];                      
+            top++;
+            dir = 1;
+        }else if(dir == 1){            
+            for(i = top;i<=bottom; i++)
+                ret[index++] = a[i][right];
+            right--;
+            dir = 2;
+        }else if(dir == 2){            
+            for(i = right;i>=left; i--)
+                ret[index++] = a[bottom][i];
+            bottom--;
+            dir = 3;
+        }else if(dir == 3){            
+            for(i = bottom;i>=top; i--)
+                ret[index++] = a[i][left];
+            left++;
+            dir = 0;
+        }
+    }
+   
+    return ret;
+}
