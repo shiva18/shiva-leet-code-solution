@@ -1,0 +1,35 @@
+Total Number of ways t reach from top left to bottom right of a mXn matrix:
+(m-1 + n-1)!/(m-1)!(n-1)!
+For 3x3 matrix = (2+2)!/2!x2! = 6
+
+Program to print all the path to each bottom right.
+
+Int b[i] = 4; // Fro 3x3 matrix 
+void find_path(int r, int c, int cur_row, int cur_c, int i){
+   
+   if(cur_row == r-1 && cur_c == c -1){
+         for(int j = 0; j<4; j++)
+           printf("%c\t", buf[j]);
+           printf("\n\n");
+           i = 0;
+           return;
+   }
+  
+  if(cur_c +1  < c){
+      buf[i] = 'r';
+      find_path(r, c, cur_row, cur_c+1, i+1 );
+  }
+
+  if(cur_row+1 < r){
+        buf[i] = 'd';
+        find_path(r, c, cur_row+1, cur_c, i+1);
+   }
+   
+}
+
+int main() {
+    int m = 3, n = 3;
+  find_path(m,n, 0, 0, 0);
+    
+  return 0;
+}
