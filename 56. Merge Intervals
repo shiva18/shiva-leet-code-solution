@@ -1,0 +1,40 @@
+int cmpfunc(int** a, int** b)
+{
+    return (*a)[0] - (*b)[0];
+}
+
+int** merge(int** interval, int intervalsSize, int* intervalsColSize, int* returnSize, int** returnColumnSizes){
+
+    int i, count = 0, min = interval[0][0], max = interval[0][1];
+    
+
+    if(interval == NULL || intervalsSize == 0){
+        *returnSize = 0;
+        return NULL;
+    }
+        
+    //qsort(interval,intervalsSize, sizeof(int*), cmpfunc);
+    qsort(interval, intervalsSize,sizeof(int*),cmpfunc);
+    
+    for(i = 1; i< intervalsSize; i++){
+        //If they can be merged then update the ending interval with max value of the both set.
+        if(interval[i][0] <= interval[count][1] ){
+            interval[count][1] = interval[i][1]>interval[count][1]?interval[i][1]:interval[count][1];           
+        }else{   
+            //Both set can not be merged hence the copy the current set of interval
+            count++;
+            interval[count][0] = interval[i][0];
+            interval[count][1] = interval[i][1];
+         }
+        
+    }
+    //To accommodate last element
+    count++;
+    *returnSize = count;
+    (*returnColumnSizes) = (int*)malloc(count*sizeof(int));
+    for(i = 0; i< count; i++){
+        (*returnColumnSizes)[i] = 2;
+    }
+    return interval;   
+    
+}
