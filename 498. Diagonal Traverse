@@ -1,0 +1,47 @@
+int* findDiagonalOrder(int** mat, int matSize, int* matColSize, int* returnSize){
+    
+    int i, m, n, r = 0, c = 0, *ret;
+    
+    m = matSize;
+    n = *matColSize;
+        
+    *returnSize = m * n;
+    ret = (int*)calloc(m*n, sizeof(int));
+    
+    for(i = 0; i<m*n; i++){
+        ret[i] = mat[r][c];
+        ///Upward Direction
+        if( (r+c)%2 == 0 ){
+            //Change to next row
+            if(c == n-1)
+                r++;
+            //Change to next col
+            else if(r==0)
+                c++;
+            else{
+                r--;
+                c++;
+            }
+            
+        }
+        //Downward Direction
+        else{
+            //Change to next col
+            if(r == m-1)
+                c++;
+            //Change to next row
+            else if(c == 0)
+                r++;
+            else{
+                r++;
+                c--;
+            }
+            
+        }
+        
+    }
+    
+    
+    return ret;
+
+}
