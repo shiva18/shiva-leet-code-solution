@@ -1,0 +1,35 @@
+/*
+Approach: 
+1. Since matrix element is will always in range of 1 & n(row size) hence so  need to check only  if any element  value is repeated or not.
+2. Just checking sum will not  work.
+*/
+bool checkValid(int** a, int matrixSize, int* matrixColSize){
+    
+    int row  = matrixSize;
+    int col  = *matrixColSize,  i, j, row_val = 0, col_val = 0;
+    int visr[row +1], visc[col+1];
+    
+    if(row != col )
+        return 0;
+
+   
+    for(i = 0; i<row; i++){
+       
+        memset(visr, 0, sizeof(visr));
+        memset(visc, 0, sizeof(visc));
+        for(j = 0; j<col; j++) {
+            row_val = a[i][j];
+            col_val = a[j][i];
+            if( visr[row_val] == 1 || visc[col_val] == 1)
+                return 0;
+            else{
+                visr[row_val] = 1;
+                visc[col_val] = 1;
+            }
+               
+        }    
+
+    }
+    
+    return 1;
+}
