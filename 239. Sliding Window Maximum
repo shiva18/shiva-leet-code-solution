@@ -1,0 +1,73 @@
+//Implementation of the Deque data structure. Deque is implemented with the help of the link list.
+//Elements are added from the end end deque from the start. Elements are added in such a way that
+//link list element is sorted decreasing order.
+
+ struct node{
+ Int info;
+ struct node *pev;
+ struct node  *next;
+ struct node index;
+};
+
+int deque(struct node **start,  struct node **end, int cur_start_index, int info, int index){
+    
+    struct node *temp1 = NULL;
+    struct node *temp = (struct node *)calloc(1, sizeof(struct node));
+    temp->next = temp->prev = NULL;
+    temp->info = info;
+    temp->index = index;
+    
+    if((*start) == NULL){
+        *start = *end = temp;
+        return (*start)->info;
+    }
+
+    //{1,3,-1,-3,5}
+    //Remove the element which is out of the window
+    if((*start)->index < cur_start_index){
+        temp1 = *start;
+        (*start) = (*start)->next;
+        free(temp);
+    }
+
+    //Insert the element in the to make list decreasing order
+    Remove all the element which is smaller than current value, since we are interested in finding maximum number in any given window.
+
+    while ( (*end) && info > (*end)->info) {
+         temp1 = *end;
+        (*end) = (*end)->prev;
+        if( (*end) != NULL)
+            (*end)->next = NULL;
+        free(temp1);
+     }
+
+    //No Element is left after delete operation.
+    if( (*end) == NULL )
+        *start = *end = temp;
+    else{
+        (*end)->next = temp;
+        temp->prev = (*end);
+        (*end) = temp;
+    }
+    
+   
+    return ( (*start)->info);
+}
+
+int main(int argc, const char * argv[]) {
+    
+ 
+    int a[5] = {1,3,-1,-3,5}, k = 3, l= 0, i;
+    struct node *start= NULL, *end = NULL;
+    int ret[5 - k +1];
+   
+    for (i = 0; i<k; i++) {
+        ret[0] = deque(&start, &end, 0, a[i], i );
+    }
+    
+    for (i = k ; i< 5 ; i++) {
+        ret[++l] = deque(&start, &end, i, a[i], i );
+    }
+        
+    return 0;
+}
