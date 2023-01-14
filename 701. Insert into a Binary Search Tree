@@ -1,0 +1,20 @@
+void insert_help(struct TreeNode **sr, int val){
+    
+     if( *sr == NULL ){
+        (*sr) = (struct TreeNode*)calloc(1,sizeof(struct TreeNode));
+        (*sr)->val = val;
+        (*sr)->left = (*sr)->right = NULL;
+        return ;
+    }
+    if(val > (*sr)->val ) 
+        insert_help( &(*sr)->right, val);
+    else
+        insert_help( &(*sr)->left, val);
+        
+}
+struct TreeNode* insertIntoBST(struct TreeNode* root, int val){
+    
+  insert_help(&root, val);
+     
+   return root;
+}
