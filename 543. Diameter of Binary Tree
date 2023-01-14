@@ -1,0 +1,21 @@
+int height(struct TreeNode* root){
+    
+    if(root == 0)
+        return 0;
+    int left = height(root->left);
+    int right = height(root->right);
+ 
+    return ((left>right)? (left+1): (right+1) );        
+}
+
+int diameterOfBinaryTree(struct TreeNode* root){
+    
+    if(root == NULL)
+        return 0;
+    int left =  height(root->left);
+    int right = height(root->right);
+    int ldia  = diameterOfBinaryTree(root->left);
+    int rdia  = diameterOfBinaryTree(root->right);
+    int dia   = ldia > rdia? ldia:rdia;
+    return ( (left + right ) > dia ? (left + right ) : dia );    
+}
