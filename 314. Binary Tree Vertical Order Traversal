@@ -1,0 +1,159 @@
+int **ret;
+
+struct qnode{    
+  
+    struct TreeNode *sptr;
+    int distance;
+    struct qnode *next;
+};
+struct qnode *front, *rear;
+
+void init(){       
+    front = rear = NULL;
+}
+
+void enque(struct TreeNode *ptr, int distance){
+    
+    struct qnode *temp, *tap;
+    temp = (struct qnode *)calloc(1, sizeof(struct qnode));
+    temp->sptr = ptr;
+    temp->distance = distance;
+    temp->next = NULL;
+    //printf("enque info = %d temp->distance = %d \n", temp->sptr->val, distance);
+    if(rear == NULL){
+        front = rear = temp;
+        tap = front;      
+        return;
+    }
+    rear->next = temp;
+    rear = temp;
+    tap = front;
+   
+      
+}
+struct qnode *deque(){
+    
+    if(front == NULL)
+        return NULL;
+   struct qnode *ptr;    
+    ptr = front;
+    //printf("dque info = %d temp->distance = %d \n", ptr->sptr->val, ptr->distance);
+    front = front->next;
+    if(front == NULL)
+        rear = NULL;    
+    return ptr;    
+}
+
+struct hnode{
+    
+    int distance;
+    int info;
+    struct hnode *next;
+};
+struct hnode *hptr[10] = {NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL};
+
+
+void hinsert(int info, int distance){
+    
+    struct hnode *temp, *new;
+    //printf("hinsert info = %d temp->distance = %d \n", info, distance);
+    new = (struct hnode *)calloc(1, sizeof(struct hnode ));
+    new->distance = distance;
+    new->info = info;
+    new->next = NULL;
+    int key = abs(distance);
+    temp = hptr[key];
+    if(temp == NULL){
+        hptr[key] = new;
+    }else{        
+        while(temp->next != NULL)
+            temp = temp->next;        
+        temp->next = new;        
+    }
+    
+}
+
+int** verticalOrder(struct TreeNode* root, int* returnSize, int** returnColumnSizes){
+    
+    struct qnode *ptr, *tap;
+    int distacne = 0, i;
+    struct TreeNode *temp;
+   
+    int level = 0, pdistance = 0;
+    //bzero(level, sizeof(level));
+    if(root == NULL){
+        (*returnSize) = 0;
+        return NULL;
+    }
+        
+    init();
+    bzero(hptr, sizeof(hptr));
+    enque(root, distacne);
+    hinsert(root->val, 0);
+   
+    while(rear != NULL){
+        ptr =  deque();
+        temp = ptr->sptr;
+       if(temp->left){           
+           hinsert(temp->left->val, ptr->distance -1);
+           enque(temp->left, ptr->distance -1);
+       }
+        
+        if(temp->right){
+             hinsert(temp->right->val, ptr->distance + 1);
+             enque(temp->right, ptr->distance + 1);
+        }
+         
+    }
+    //printf("h = %d d= %d\n", h, d);
+    ret = (int **)malloc(sizeof(int*)*50 );
+    for(i = 0; i<50; i++)
+        ret[i] = (int *)malloc(sizeof(int)*50 );
+    
+    (*returnColumnSizes) = (int*)calloc(50, sizeof(int));
+    
+    for(i = 9; i>= 0; i--){
+        struct hnode *temp = hptr[i];
+        
+        while(temp != NULL){
+        //printf("Neg i =%d level = %d info = %d temp->distance = %d \n", i,level, temp->info, temp->distance);
+            
+            if(temp->distance < 0){
+                //printf("ni =%d level = %d info = %d pdistance = %d temp->distance = %d \n", i, level, temp->info,pdistance, temp->distance);
+                if(temp->distance > pdistance)
+                    level++;
+                ret[level][((*returnColumnSizes)[level]++)] = temp->info;
+                //level++;
+                pdistance = temp->distance;
+            }
+                
+            temp = temp->next;
+            
+        }
+          
+    }
+    for(i = 0; i<10; i++){
+        struct hnode *temp = hptr[i];
+        //level = 0;
+        while(temp != NULL){
+        //printf("i =%d level = %d info = %d pdistance = %d temp->distance = %d \n", i, level, pdistance, temp->info, temp->distance);
+            
+            if(temp->distance >= 0){
+                //printf("i =%d level = %d info = %d pdistance = %d temp->distance = %d \n", i, level, temp->info,pdistance, temp->distance);
+                 if(temp->distance > pdistance)
+                    level++;
+                 ret[level][((*returnColumnSizes)[level]++)] = temp->info;
+                 pdistance = temp->distance;
+            }
+               
+            temp = temp->next;
+            
+        }
+          
+    }
+
+    
+    (*returnSize) = level+1;
+    return ret;
+
+}
