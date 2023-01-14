@@ -1,0 +1,41 @@
+int **ret;
+int height(struct TreeNode* root){
+    
+    if(root == NULL)
+        return 0;    
+    int left = height(root->left);
+    int right = height(root->right);
+    return (left>right?left+1:right+1);       
+}
+            
+void dfs(struct TreeNode* root, int** returnColumnSizes, int level){
+    
+    if(root == NULL )
+        return;
+    printf("%d\n", level);
+    
+    dfs(root->left, returnColumnSizes, level-1);
+    dfs(root->right, returnColumnSizes, level-1);    
+    ret[level][(*returnColumnSizes)[level]++] = root->val;
+    
+}
+
+int** levelOrderBottom(struct TreeNode* root, int* returnSize, int** returnColumnSizes){
+    
+  int h = 0;
+  if(root == NULL){
+      *returnSize = 0;
+      return NULL;    
+  }
+      
+  printf("%p\n", root);  
+  h = height(root);
+  ret = (int**)malloc(sizeof(int*) * h);  
+  for(int i = 0; i < h; i++)
+    ret[i] = (int*)malloc(sizeof(int) * 256);    
+  *returnColumnSizes = (int*)calloc(h, sizeof(int));
+  dfs(root, returnColumnSizes, (h-1)) ;
+  *returnSize = h;
+  return ret;    
+
+}
