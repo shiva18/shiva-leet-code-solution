@@ -1,0 +1,18 @@
+int rangeSumBST(struct TreeNode* root, int low, int high){
+    int sum = 0;
+    if(root == NULL)
+        return sum;
+     if(root->val >= low && root->val <= high){
+          sum += root->val;
+         printf("%d\n", root->val);
+     } 
+    if( root->val < low)
+           sum += rangeSumBST(root->right, low, high); 
+    else if( root->val > high)
+        sum += rangeSumBST(root->left, low, high);
+    else{
+        sum += rangeSumBST(root->right, low, high); 
+        sum += rangeSumBST(root->left, low, high);
+    }
+    return sum;
+}
