@@ -1,0 +1,22 @@
+struct TreeNode* deleteNode(struct TreeNode* root, int key){
+    
+    struct TreeNode *temp;
+    if(root == NULL)
+        return NULL;
+
+    else if(key < root->val) 
+        root->left = deleteNode(root->left, key);
+
+    else if(key > root->val) 
+
+        root->right = deleteNode(root->right, key);
+    else{
+        //Element is found
+
+         //both left and right child are NULL
+        if (root->left == NULL  && root->right == NULL){
+            printf("both NULL\n");
+            free(root);
+            root = NULL;
+            //return root;
+        }
