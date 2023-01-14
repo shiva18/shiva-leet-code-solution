@@ -1,0 +1,30 @@
+Solution 1: Iterative Solution:
+struct TreeNode* searchBST(struct TreeNode* root, int val){
+    
+    while(root!=NULL && root->val != val){
+        root = (val > root->val)? root->right:  root->left;
+    }
+    
+    return root;
+
+Solution2: Recursive Solution.
+struct TreeNode* searchBST(struct TreeNode* root, int val){
+       
+    
+    if(root == NULL)
+        return NULL;
+    
+    if(root->val == val)
+        return root;
+    
+    while(root && root->val != val ){
+        
+        if(val > root->val)
+             return searchBST(root->right, val);
+        else
+             return searchBST(root->left, val);                          
+        
+    }   
+    return NULL;
+
+}
