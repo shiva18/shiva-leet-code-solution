@@ -1,0 +1,22 @@
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* intersect(int* a, int n, int* b, int m, int* returnSize){
+
+    int i, t = n>m?m:n, index = 0;
+    int *ret = (int *)calloc(t, sizeof(int));
+    int hp[1001];
+    bzero(hp, sizeof(hp));
+    for(i = 0; i<n; i++){
+        hp[a[i]]++;
+    }
+    for(i=0;i<m;i++){
+        if( hp[b[i]] != 0 ){
+            ret[index++] = b[i];
+            hp[b[i]]--;
+
+        }
+    }
+    (*returnSize) = index;
+    return ret;
+}
