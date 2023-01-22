@@ -1,0 +1,15 @@
+int longestPalindrome(char * s){
+
+    int i = 0, hp[60], d = 0, ss= 0;
+    bzero(hp, sizeof(hp));
+    while( s[i] != '\0' ){
+        hp[ s[i++] - 65 ]++;
+    }
+    for(i = 0; i<60; i++){
+        d += hp[i]/2;
+        ss += hp[i]%2;
+    }
+    ss = ss>0?1:0;
+    return ( d*2 + ss);
+
+}
