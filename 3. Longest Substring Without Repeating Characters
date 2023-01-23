@@ -1,0 +1,21 @@
+int lengthOfLongestSubstring(char * s){
+    
+   int i = 0, previndex[256], cur = 0, max = 0, curindex = 0, idx, prev_max = 0, cur_length = 0;
+   char *c;
+   bzero(previndex, sizeof(previndex));
+
+  for(c = s; *c; c++){      
+       idx =  c - s + 1;
+       cur_length = idx - previndex[*c];
+       previndex[*c] = idx;
+       cur = (++prev_max)<cur_length?prev_max:cur_length;
+       if(cur>max){
+           max = cur;
+       } 
+       prev_max = cur;
+
+   }
+        
+      
+    return max;
+}
