@@ -1,0 +1,33 @@
+ int count(struct Node* root){
+    int i, c;
+    if(root == NULL )
+        return 0;
+    for(c = 0, i = 0; i< root->numChildren; i++){
+        c =  c  + count(root->children[i]);
+    }
+    c++;
+    return c;
+}
+void dfs(struct Node* root, int *ret, int *index){
+
+    if(root == NULL )
+        return;
+    ret[(*index)] = root->val;
+    (*index) = (*index) + 1;
+    for(int i = 0; i<root->numChildren; i++){
+        dfs(root->children[i], ret, index);
+    }
+    return;
+}
+
+
+int* preorder(struct Node* root, int* returnSize) {
+
+    int cnt = count(root);
+    int *ret = (int *)calloc(cnt, sizeof(int));
+    int index = 0;
+    dfs(root, ret, &index);
+    (*returnSize) = cnt;
+    return ret;
+    
+}
